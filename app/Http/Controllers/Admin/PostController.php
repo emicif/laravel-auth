@@ -15,6 +15,8 @@ class PostController extends Controller
     public function index()
     {
         //
+        $posts = Post::all();
+        return view('admin.posts.index', compact('posts'));
     }
 
     /**
@@ -25,6 +27,7 @@ class PostController extends Controller
     public function create()
     {
         //
+        return view('admin.posts.create');
     }
 
     /**
@@ -36,6 +39,26 @@ class PostController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'title'=>'required|max:250',
+            'content'=>'required'
+        ]);
+
+        $postData = $request->all();
+        $newPost = new Post();
+        $newPost->fill($postData);
+//slug
+        $slug=Str::slug($newPost->title);
+        $alternativeSlug = $slug;
+
+        $postFound = Post::where('slug', $slug)->first();
+        $counter = 1;
+        while($postFound){
+            $alternativeSlug = $slug . '_' . $counter;
+            $counter ++;
+            $postFound = Post::where('slug', $alternativeSlug)->first();
+        }
+        $newPost->slug = $alternativeSlug;
     }
 
     /**
