@@ -15,8 +15,9 @@ class PostController extends Controller
     public function index()
     {
         //
-        $posts = Post::all();
-        return view('admin.posts.index', compact('posts'));
+        //$posts = Post::all();
+        return view('admin.posts.index');
+        //, compact('posts'));
     }
 
     /**
@@ -70,6 +71,12 @@ class PostController extends Controller
     public function show($id)
     {
         //
+        $post = Post::find($id);
+        if($post){
+            return view('admin.posts.show', compact('post'));
+        }else{
+            abort(404);
+        }
     }
 
     /**
@@ -81,6 +88,8 @@ class PostController extends Controller
     public function edit($id)
     {
         //
+        $comic = Post::findOrFail($id);
+        return view('admin.posts.edit', compact('post'));
     }
 
     /**
@@ -104,5 +113,8 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
+        $post = Post::find($id);
+        $post->delete();
+        return redirect()->route('admin.posts.index');
     }
 }

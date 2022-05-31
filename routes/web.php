@@ -17,9 +17,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 */
-Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//non crea rotte quindi non ci si può accedere -> ti rimanda a guest!
+Auth::routes(['register'=>false, 'reset'=>false, 'verify'=>false]);
+
+//Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::middleware('auth')
@@ -27,8 +29,8 @@ Route::middleware('auth')
     ->name('admin.')
     ->prefix('admin')
     ->group(function () {
-        Route::get('/', 'HomeController@index')
-        ->name('home');
+        Route::get('/', 'HomeController@index')->name('home');
+        Route::resource('/posts', 'PostController');
 });
 
 
