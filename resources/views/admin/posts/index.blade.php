@@ -5,17 +5,17 @@
         <div class="col-12">
             <div class="d-flex justify-content-between align-items-center">
                 <h1>Tutti i post</h1>
-                <a href="{{ route('admin.posts.create') }}">Crea nuovo post</a>
+                <a href="{{ route('admin.posts.create') }}" class="btn btn-primary">Crea nuovo post</a>
             </div>
 
 
-            <table>
+            <table class="table">
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Titolo</th>
                         <th>Slug</th>
-                        <th>Azioni</th>
+                        <th class="text-center">Azioni</th>
                     </tr>
                 </thead>
             </table>

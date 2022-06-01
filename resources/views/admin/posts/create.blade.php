@@ -1,14 +1,45 @@
+@extends('partials/dashboard')
 @section('content')
-    <form autocomplete="off" action="{{ route('admin.posts.store') }}" method="POST">
-        @csrf
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h1>Creazione nuovo post</h1>
 
-        <div>
-            <label for="title">Title:</label>
-            <input type="text" required name="title" />
+                </div>
+                <div>
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+
+                        </div>
+                    @endif
+                </div>
+                <form autocomplete="off" action="{{ route('admin.posts.store') }}" method="POST">
+                    @csrf
+                    <div class="form-group">
+                        <label>Titolo</label>
+                        <input type="text" name="title" class="form-control" placeholder="Inserisci titolo"
+                            value="{{ old('title') }}" required>
+
+                    </div>
+                    <div class="form-group">
+                        <label>Contenuto</label>
+                        <textarea name="content" class="form-control" placeholder="Inserisci contenuto"
+                            required>{{ old('content') }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit">Crea post</button>
+                    </div>
+
+                </form>
+            </div>
+
         </div>
-        CIAO create
 
-
-        <button type="submit">Aggiungi</button>
-    </form>
+    </div>
 @endsection
