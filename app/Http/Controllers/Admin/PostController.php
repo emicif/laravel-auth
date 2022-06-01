@@ -109,12 +109,12 @@ class PostController extends Controller
             'title'=>'required|max:250',
             'content'=>'required'
         ]);
-
+        $post = Post::findOrFail($id);
         $postData = $request->all();
-        $post = new Post();
+        //$post = new Post();
         $post->fill($postData);
-//slug
-        $slug=Str::slug($newPost->title);
+    //slug
+        $slug=Str::slug($post->title);
         $alternativeSlug = $slug;
 
         $postFound = Post::where('slug', $slug)->first();
@@ -125,6 +125,8 @@ class PostController extends Controller
             $postFound = Post::where('slug', $alternativeSlug)->first();
         }
         $post->slug = $alternativeSlug;
+    //fine slug
+
         $post->update();
         return redirect()->route('admin.posts.index');
     }
