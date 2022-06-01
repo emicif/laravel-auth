@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+//use Illuminate\Support\Str;
+use App\Post;
 
 class PostController extends Controller
 {
@@ -15,9 +17,8 @@ class PostController extends Controller
     public function index()
     {
         //
-        //$posts = Post::all();
-        return view('admin.posts.index');
-        //, compact('posts'));
+        $posts = Post::all();
+        return view('admin.posts.index', compact('posts'));
     }
 
     /**
@@ -60,6 +61,8 @@ class PostController extends Controller
             $postFound = Post::where('slug', $alternativeSlug)->first();
         }
         $newPost->slug = $alternativeSlug;
+        $newPost->save();
+        return redirect()->route('admin.posts.index');
     }
 
     /**
@@ -88,7 +91,7 @@ class PostController extends Controller
     public function edit($id)
     {
         //
-        $comic = Post::findOrFail($id);
+        $post = Post::findOrFail($id);
         return view('admin.posts.edit', compact('post'));
     }
 
@@ -102,6 +105,28 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'title'=>'required|max:250',
+            'content'=>'required'
+        ]);
+
+        $postData = $request->all();
+        $post = new Post();
+        $post->fill($postData);
+//slug
+        $slug=Str::slug($newPost->title);
+        $alternativeSlug = $slug;
+
+        $postFound = Post::where('slug', $slug)->first();
+        $counter = 1;
+        while($postFound){
+            $alternativeSlug = $slug . '_' . $counter;
+            $counter ++;
+            $postFound = Post::where('slug', $alternativeSlug)->first();
+        }
+        $post->slug = $alternativeSlug;
+        $post->update();
+        return redirect()->route('admin.posts.index');
     }
 
     /**
