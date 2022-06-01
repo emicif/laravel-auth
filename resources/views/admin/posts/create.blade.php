@@ -33,7 +33,7 @@
                             required>{{ old('content') }}</textarea>
                     </div>
                     <div class="form-group">
-                        <button type="submit">Crea post</button>
+                        <button type="submit" class="btn btn-success">Crea post</button>
                     </div>
 
                 </form>

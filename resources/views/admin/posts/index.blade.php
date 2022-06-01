@@ -15,20 +15,27 @@
                         <th>ID</th>
                         <th>Titolo</th>
                         <th>Slug</th>
-                        <th class="text-center">Azioni</th>
+                        <th>Azioni</th>
                     </tr>
                 </thead>
-            </table>
 
-            @foreach ($posts as $post)
-                <tr>
-                    <td>{{ $post->id }}</td>
-                    <td>{{ $post->title }}</td>
-                    <td>{{ $post->slug }}</td>
-                    <a href="{{ route('admin.posts.show', ['post' => $post->id]) }}">SHOW</a>
-                    <a href="{{ route('admin.posts.edit', ['post' => $post->id]) }}">EDIT</a>
-                </tr>
-            @endforeach
+                <tbody>
+                    @foreach ($posts as $post)
+                        <tr>
+                            <td>{{ $post->id }}</td>
+                            <td>{{ $post->title }}</td>
+                            <td>{{ $post->slug }}</td>
+                            <td>
+                                <a class="btn btn-info"
+                                    href="{{ route('admin.posts.show', ['post' => $post->id]) }}">SHOW</a>
+                                <a class="btn btn-warning"
+                                    href="{{ route('admin.posts.edit', ['post' => $post->id]) }}">EDIT</a>
+                            </td>
+
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
 @endsection

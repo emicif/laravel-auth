@@ -17,13 +17,13 @@
                 </dl>
 
                 {{-- modifica --}}
-                <a href="{{ route('admin.posts.edit', ['post' => $post->id]) }}">EDIT</a>
+                <a class="btn btn-warning" href="{{ route('admin.posts.edit', ['post' => $post->id]) }}">EDIT</a>
 
                 {{-- elimina --}}
                 <form autocomplete="off" action="{{ route('admin.posts.destroy', ['post' => $post->id]) }}" method="POST">
                     @csrf
                     @method('DELETE')
-                    <button type="submit">
+                    <button type="submit" class="btn btn-danger">
                         ELIMINA
                     </button>
 
